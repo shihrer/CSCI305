@@ -1,8 +1,8 @@
 ######################################### 	
 #    CSCI 305 - Programming Lab #1		
 #										
-#  < Replace with your Name >			
-#  < Replace with your Email >			
+#  Michael Shihrer, Matthew Wentz			
+#  michael.shihrer@gmail.com, mattwentz@sbcglobal.net		
 #										
 #########################################
 
