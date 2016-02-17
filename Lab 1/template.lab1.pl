@@ -24,6 +24,7 @@ open(INFILE, $ARGV[0]) or die "Cannot open $ARGV[0]: $!.\n";
 # YOUR VARIABLE DEFINITIONS HERE...
 
 # This loops through each line of the file
+my @cleanedTitles
 while($line = <INFILE>) {
 	# YOUR CODE BELOW...
 	@lineSplit = split(/<SEP>/,$line);
@@ -34,12 +35,17 @@ while($line = <INFILE>) {
 	$title = lc$title;
 
 	#test
-	if ($clean =~ m{^[[:ascii:]]+$}){
-		$clean =~ s/[\h]+/ /g;
-		$clean =~ s/^\s//;
-		push @titles, $clean;
+	if ($title =~ m{^[[:ascii:]]+$}){
+		$title =~ s/[\h]+/ /g;
+		$title =~ s/^\s//;
+		push @cleanedTitles, $title;
 
- }
+}
+#self-check 1
+print scalar @titles
+
+#Create hash for bigrams
+
 
 # Close the file handle
 close INFILE; 
