@@ -33,11 +33,12 @@ while($line = <INFILE>) {
 	$title =~ s/[\?¿!¡\.;&\$\@%#\|]+//g;
 	$title = lc$title;
 
+	#test
 	if ($clean =~ m{^[[:ascii:]]+$}){
 		$clean =~ s/[\h]+/ /g;
 		$clean =~ s/^\s//;
 		push @titles, $clean;
-		
+
  }
 
 # Close the file handle
