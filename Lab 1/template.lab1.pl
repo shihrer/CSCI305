@@ -24,7 +24,7 @@ open(INFILE, $ARGV[0]) or die "Cannot open $ARGV[0]: $!.\n";
 # YOUR VARIABLE DEFINITIONS HERE...
 
 # This loops through each line of the file
-my @cleanedTitles
+my @cleanedTitles;
 while($line = <INFILE>) {
 	# YOUR CODE BELOW...
 	@lineSplit = split(/<SEP>/,$line);
