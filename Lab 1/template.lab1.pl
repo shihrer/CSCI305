@@ -46,6 +46,9 @@ while($line = <INFILE>) {
 	# Lowercase song title
 	$title = lc$title;
 
+	#remove stop words
+	$title =~ s/\b(an|a|and|by|for|from|in|of|on|or|out|the|to|with)\b//g;
+
 	# Ignore foreign titles
 	if ($title =~ m{^[[:ascii:]]+$}){
 		$title =~ s/[\h]+/ /g;
@@ -56,25 +59,19 @@ while($line = <INFILE>) {
 	}
 }
 
-# Self-check 1 -- Remove from final
-say scalar @cleanedTitles . " song titles processed";
-
 # Create hash for bigrams
 my %titleBigramHash;
 foreach my $title (@cleanedTitles){
+
 	#get words from title
 	my @titleWords = split(' ', $title);
+
 
 	for(my $i = 0; $i < scalar @titleWords - 1; $i++)
 	{
 		$titleBigramHash{@titleWords[$i]}{@titleWords[$i+1]} += 1;
 	}
 }
-
-# Self-check 2
-print mcw("happy");
-print mcw("sad");
-print mcw("love");
 
 # Close the file handle
 close INFILE; 
@@ -85,40 +82,37 @@ print "File parsed. Bigram model built.\n\n";
 
 
 # User control loop
-print "Enter a word [Enter 'q' to quit]: ";
-$input = <STDIN>;
-chomp($input);
-print "\n";	
-my $counter = 0;
-my $newsong;
-my $word = $input;
 while ($input ne "q"){
-	if($counter == 20 || &mcw($word) == undef)
+	print "Enter a word [Enter 'q' to quit]: ";
+	$input = <STDIN>;
+	chomp($input);
+	print "\n";	
+	my $counter = 0;
+	my $songTitle = "";
+	$songTitle = $input . " ";
+	while($counter < 20)
 	{
-		print $newsong;
+		my $result = mcw($input);
+		if(defined $result)
+		{
+			$songTitle = $songTitle . $result . " ";
+			$input = $result;
+		}
+		else
+		{
+			last;
+		}
+
+		$counter += 1;
 	}
-	elsif($counter < 20)
-	{
-		$newsong += &mcw($word) + " ";
-		$counter = $counter + 1;
-	}
+
+	print $songTitle . "\n";
 }
 
 # MORE OF YOUR CODE HERE....
 sub mcw{
 	my $word = @_[0];
-	print $word . "\n";
-
-	my %wordHash = %{%titleBigramHash{$word}};
 	my @keys = sort { $titleBigramHash{$word}{$a} <=> $titleBigramHash{$word}{$b} } keys %{$titleBigramHash{$word}};
 
-    return @keys[0];
-	# while($songWords < 20){
-	# 	if(scalar @possibleWords > 0){
-	# 		$songTitle = $songTitle . @possibleWords[0] . " ";
-	# 	}
-	# 	else{
-	# 		last;
-	# 	}
-	# }
+    return pop @keys;
 }
