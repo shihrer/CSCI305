@@ -59,11 +59,6 @@ while($line = <INFILE>) {
 # Self-check 1 -- Remove from final
 say scalar @cleanedTitles . " song titles processed";
 
-# Self-check 2
-say mcw("happy");
-say mcw("sad");
-say mcw("love");
-
 # Create hash for bigrams
 my %titleBigramHash;
 foreach my $title (@cleanedTitles){
@@ -75,6 +70,11 @@ foreach my $title (@cleanedTitles){
 		$titleBigramHash{@titleWords[$i]}{@titleWords[$i+1]} += 1;
 	}
 }
+
+# Self-check 2
+print mcw("happy");
+print mcw("sad");
+print mcw("love");
 
 # Close the file handle
 close INFILE; 
@@ -89,21 +89,30 @@ print "Enter a word [Enter 'q' to quit]: ";
 $input = <STDIN>;
 chomp($input);
 print "\n";	
+my $counter = 0;
+my $newsong;
+my $word = $input;
 while ($input ne "q"){
-	# Replace these lines with some useful code
-	print "Not yet implemented.  Goodbye.\n";
-	$input = 'q';
+	if($counter == 20 || &mcw($word) == undef)
+	{
+		print $newsong;
+	}
+	elsif($counter < 20)
+	{
+		$newsong += &mcw($word) + " ";
+		$counter = $counter + 1;
+	}
 }
 
 # MORE OF YOUR CODE HERE....
 sub mcw{
 	my $word = @_[0];
+	print $word . "\n";
+
 	my %wordHash = %{%titleBigramHash{$word}};
-	my @keys = sort { $wordHash{$a} <=> $wordHash{$b} } keys %wordHash;
-	my @vals = @wordHash{@keys};
+	my @keys = sort { $titleBigramHash{$word}{$a} <=> $titleBigramHash{$word}{$b} } keys %{$titleBigramHash{$word}};
 
-	say @vals;
-
+    return @keys[0];
 	# while($songWords < 20){
 	# 	if(scalar @possibleWords > 0){
 	# 		$songTitle = $songTitle . @possibleWords[0] . " ";
@@ -112,6 +121,4 @@ sub mcw{
 	# 		last;
 	# 	}
 	# }
-
-	return @vals[0];
 }
