@@ -64,7 +64,7 @@ my %titleBigramHash;
 foreach my $title (@cleanedTitles){
 
 	#get words from title
-	my @titleWords = split(' ', $title);
+	my @titleWords = split(" ", $title);
 
 
 	for(my $i = 0; $i < scalar @titleWords - 1; $i++)
@@ -84,26 +84,35 @@ print "File parsed. Bigram model built.\n\n";
 # User control loop
 while ($input ne "q"){
 	print "Enter a word [Enter 'q' to quit]: ";
+
+	# Get user input
 	$input = <STDIN>;
 	chomp($input);
-	print "\n";	
+	print "\n";
+
+	#Counter and song title variables
 	my $counter = 0;
 	my $songTitle = "";
 	$songTitle = $input . " ";
-	while($counter < 20)
-	{
-		my $result = mcw($input);
-		if(defined $result)
-		{
-			$songTitle = $songTitle . $result . " ";
-			$input = $result;
-		}
-		else
-		{
-			last;
-		}
 
-		$counter += 1;
+	# Loop through song title.
+	unless($input eq "q"){
+		while($counter < 20)
+		{
+			# Get most common word
+			my $result = mcw($input);
+			if(defined $result)
+			{
+				$songTitle = $songTitle . $result . " ";
+				$input = $result;
+			}
+			else
+			{
+				last;
+			}
+
+			$counter += 1;
+		}
 	}
 
 	print $songTitle . "\n";
