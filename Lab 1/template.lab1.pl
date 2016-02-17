@@ -25,26 +25,39 @@ open(INFILE, $ARGV[0]) or die "Cannot open $ARGV[0]: $!.\n";
 
 # This loops through each line of the file
 my @cleanedTitles;
+my $line;
 while($line = <INFILE>) {
 	# YOUR CODE BELOW...
+
+	# Extract song title
 	@lineSplit = split(/<SEP>/,$line);
 	my $title = pop @lineSplit;
+
+	# Remove after special characters
 	$title =~ s/[\([\{\/\\_\-:\"\`\+=\*].*$//g;
+
+	# Remove "feat" text
 	$title =~ s/feat\..*$//g;
+
+	# Remove punctuation
 	$title =~ s/[\?¿!¡\.;&\$\@%#\|]+//g;
+
+	# Lowercase song title
 	$title = lc$title;
 
-	#test
+	# Ignore foreign titles
 	if ($title =~ m{^[[:ascii:]]+$}){
 		$title =~ s/[\h]+/ /g;
 		$title =~ s/^\s//;
+
+		# Save title to array
 		push @cleanedTitles, $title;
-
+	}
 }
-#self-check 1
-print scalar @titles;
 
-#Create hash for bigrams
+# Self-check 1 -- Remove from final
+print scalar @cleanedTitles . " song titles processed\n";
+
 
 
 # Close the file handle
