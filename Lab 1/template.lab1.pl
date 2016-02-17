@@ -47,7 +47,7 @@ while($line = <INFILE>) {
 	$title = lc$title;
 
 	#remove stop words
-	$title =~ s/\b(an|a|and|by|for|from|in|of|on|or|out|the|to|with)\b//g;
+	$title =~ s/\b(an|a|and|by|for|from|in|of|on|or|out|the|to|with|you|are)\b//g;
 
 	# Ignore foreign titles
 	if ($title =~ m{^[[:ascii:]]+$}){
