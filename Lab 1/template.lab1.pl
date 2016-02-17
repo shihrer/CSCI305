@@ -31,7 +31,7 @@ while($line = <INFILE>) {
 	# YOUR CODE BELOW...
 
 	# Extract song title
-	@lineSplit = split(/<SEP>/,$line);
+	my @lineSplit = split(/<SEP>/,$line);
 	my $title = pop @lineSplit;
 
 	# Remove after special characters
@@ -58,6 +58,11 @@ while($line = <INFILE>) {
 
 # Self-check 1 -- Remove from final
 say scalar @cleanedTitles . " song titles processed";
+
+# Self-check 2
+say mcw("happy");
+say mcw("sad");
+say mcw("love");
 
 # Create hash for bigrams
 my %titleBigramHash;
@@ -91,3 +96,22 @@ while ($input ne "q"){
 }
 
 # MORE OF YOUR CODE HERE....
+sub mcw{
+	my $word = @_[0];
+	my %wordHash = %{%titleBigramHash{$word}};
+	my @keys = sort { $wordHash{$a} <=> $wordHash{$b} } keys %wordHash;
+	my @vals = @wordHash{@keys};
+
+	say @vals;
+
+	# while($songWords < 20){
+	# 	if(scalar @possibleWords > 0){
+	# 		$songTitle = $songTitle . @possibleWords[0] . " ";
+	# 	}
+	# 	else{
+	# 		last;
+	# 	}
+	# }
+
+	return @vals[0];
+}
