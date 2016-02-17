@@ -25,12 +25,16 @@ open(INFILE, $ARGV[0]) or die "Cannot open $ARGV[0]: $!.\n";
 
 # This loops through each line of the file
 while($line = <INFILE>) {
-
-	# This prints each line. You will not want to keep this line.
-	print $line;
-
 	# YOUR CODE BELOW...
-}
+	@lineSplit = split(/<SEP>/,$line);
+	my $title = pop @lineSplit;
+	$title =~ s/[\([\{\/\\_\-:\"\`\+=\*].*$//g;
+	$title =~ s/feat\..*$//g;
+	$title =~ s/[\?¿!¡\.;&\$\@%#\|]+//g;
+	$title = lc$title;
+
+	print $title;
+ }
 
 # Close the file handle
 close INFILE; 
