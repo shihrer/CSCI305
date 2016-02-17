@@ -1,3 +1,4 @@
+use feature 'say';
 ######################################### 	
 #    CSCI 305 - Programming Lab #1		
 #										
@@ -56,9 +57,19 @@ while($line = <INFILE>) {
 }
 
 # Self-check 1 -- Remove from final
-print scalar @cleanedTitles . " song titles processed\n";
+say scalar @cleanedTitles . " song titles processed";
 
+# Create hash for bigrams
+my %titleBigramHash;
+foreach my $title (@cleanedTitles){
+	#get words from title
+	my @titleWords = split(' ', $title);
 
+	for(my $i = 0; $i < scalar @titleWords - 1; $i++)
+	{
+		$titleBigramHash{@titleWords[$i]}{@titleWords[$i+1]} += 1;
+	}
+}
 
 # Close the file handle
 close INFILE; 
