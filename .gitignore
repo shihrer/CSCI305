@@ -39,5 +39,5 @@ nytprof.out
 sftp-config.json
 
 ###Project Files###
-a_tracks.txt
-unique_tracks.txt
+# a_tracks.txt
+# unique_tracks.txt
