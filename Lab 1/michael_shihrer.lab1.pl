@@ -8,8 +8,8 @@ use feature 'say';
 #########################################
 
 # Replace the string value of the following variable with your names.
-my $name = "<Replace with your name>";
-my $partner = "<Replace with your partner's name>";
+my $name = "Michael Shihrer";
+my $partner = "Matthew Wentz";
 print "CSCI 305 Lab 1 submitted by $name and $partner.\n\n";
 
 # Checks for the argument, fail if none given
